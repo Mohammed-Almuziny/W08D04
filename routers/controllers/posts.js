@@ -18,8 +18,22 @@ const createPost = (req, res) => {
         res.status(400).json({ error: err });
       });
   } catch (err) {
-    res.status(404).json({ error: err });
+    res.status(400).json({ error: err });
   }
 };
 
-module.exports = { createPost };
+const getUserPost = (req, res) => {
+  try {
+    const { createrID } = req.params;
+
+    postsModel
+      .find({ createrID: createrID, isDel: false })
+      .then((result) => {
+        res.status(200).json(result);
+      });
+  } catch (err) {
+    res.status(400).json({ error: err });
+  }
+};
+
+module.exports = { createPost, getUserPost };
