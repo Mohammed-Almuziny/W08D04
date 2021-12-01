@@ -25,10 +25,8 @@ const createPost = (req, res) => {
 
 const getUserPosts = (req, res) => {
   try {
-    const { createrID } = req.params;
-
     postsModel
-      .find({ createrID: createrID, isDel: false })
+      .find({ createrID: req.token.id, isDel: false })
       .then((result) => {
         res.status(200).json(result);
       })
