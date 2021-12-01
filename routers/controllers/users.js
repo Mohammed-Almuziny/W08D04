@@ -36,21 +36,23 @@ const register = async (req, res) => {
 
 const logIn = (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { nameOrEmail, password } = req.body;
 
-    const savedEmail = email.toLowerCase();
+    const savedEmail = nameOrEmail.toLowerCase();
+
+    console.log(nameOrEmail);
 
     usersModel
-      .findOne({ email: savedEmail })
+      .findOne({ $or: [{ name: nameOrEmail }, { email: savedEmail }] })
       .then(async (result) => {
         if (result) {
-          if (result.email === savedEmail) {
+          if (result.email === savedEmail || result.name === nameOrEmail) {
             const savedPassword = await bcrypt.compare(
               password,
               result.password
             );
 
-            if (savedPassword) {
+            if (savedPassword || result.name === nameOrEmail) {
               const payload = {
                 role: result.role,
                 id: result._id,
