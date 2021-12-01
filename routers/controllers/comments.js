@@ -6,7 +6,7 @@ const createComment = (req, res) => {
 
     const newComment = new commentsModel({
       desc,
-      createrID: req.token.id,
+      creatorId: req.token.id,
       ref,
     });
 
@@ -19,8 +19,25 @@ const createComment = (req, res) => {
         res.status(400).json({ error: err });
       });
   } catch (err) {
-    res.status(404).json({ error: err });
+    res.status(400).json({ error: err });
   }
 };
 
-module.exports = { createComment };
+const getPostComments = (req, res) => {
+  try {
+    const { postId } = req.params;
+
+    commentsModel
+      .find({ ref: postId })
+      .then((result) => {
+        res.status(200).json(result);
+      })
+      .catch((err) => {
+        res.status(400).json({ error: err });
+      });
+  } catch (err) {
+    res.status(400).json({ error: err });
+  }
+};
+
+module.exports = { createComment, getPostComments };
