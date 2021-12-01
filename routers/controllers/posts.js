@@ -1,10 +1,10 @@
 const postsModel = require("./../../db/models/posts");
 const rolesModel = require("./../../db/models/roles");
+const likesModel = require("./../../db/models/likes");
 
 const createPost = (req, res) => {
   try {
     const { desc } = req.body;
-
     const newPost = new postsModel({
       desc,
       createrID: req.token.id,
@@ -141,10 +141,44 @@ const getAllPosts = (req, res) => {
   }
 };
 
+const handleLike = (req, res) => {
+  try {
+    const { postId } = req.body;
+
+    if (req.isLiked) {
+      likesModel
+        .findOneAndDelete({ user: req.token.id, post: postId })
+        .then((result) => {
+          res.status(201).json(result);
+        })
+        .catch((err) => {
+          res.status(400).json({ error: err });
+        });
+    } else {
+      const newLike = new likesModel({
+        user: req.token.id,
+        post: postId,
+      });
+
+      newLike
+        .save()
+        .then((result) => {
+          res.status(201).json(result);
+        })
+        .catch((err) => {
+          res.status(400).json({ error: err });
+        });
+    }
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
 module.exports = {
   createPost,
   getUserPosts,
   updatePost,
   deletePost,
   getAllPosts,
+  handleLike,
 };
