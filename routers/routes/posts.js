@@ -14,11 +14,11 @@ const isLiked = require("./../middlewares/likeMiddleware");
 
 const postsRouter = express.Router();
 
-postsRouter.post("/create", authentication, createPost);
-postsRouter.get("/userPosts", authentication, getUserPosts);
-postsRouter.put("/update", authentication, updatePost);
-postsRouter.delete("/:postId", authentication, deletePost);
-postsRouter.get("/allPosts", authentication, getAllPosts);
-postsRouter.post("/like", authentication, isLiked, handleLike);
+postsRouter.post("/create", authentication, createPost); // create a new post
+postsRouter.get("/userPosts", authentication, getUserPosts); // get the user posts
+postsRouter.put("/update", authentication, updatePost); // update the post
+postsRouter.delete("/:postId", authentication, deletePost); // delete the post
+postsRouter.get("/allPosts", authentication, getAllPosts); //  get all posts
+postsRouter.post("/like", authentication, isLiked, handleLike); // like a post
 
 module.exports = postsRouter;
