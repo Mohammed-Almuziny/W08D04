@@ -8,6 +8,7 @@ const posts = new mongoose.Schema({
     required: true,
     ref: "Users",
   },
+  isDel: { type: Boolean, default: false },
   date: { type: Date, default: new Date() },
 });
 
