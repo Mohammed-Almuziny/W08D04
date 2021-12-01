@@ -1,4 +1,5 @@
 const commentsModel = require("./../../db/models/comments");
+const rolesModel = require("./../../db/models/roles");
 
 const createComment = (req, res) => {
   try {
@@ -66,4 +67,53 @@ const updateComment = (req, res) => {
   }
 };
 
-module.exports = { createComment, getPostComments, updateComment };
+const deleteComment = async (req, res) => {
+  try {
+    const { commentId } = req.params;
+
+    const user = await rolesModel.findById(req.token.role);
+
+    if (user.role === "admin") {
+      commentsModel
+        .findOneAndUpdate(
+          { _id: commentId, isDel: false },
+          { isDel: true },
+          {
+            new: true,
+          }
+        )
+        .then((result) => {
+          if (result) res.status(200).json(result);
+          else res.status(400).json({ message: "this comment dont exist" });
+        })
+        .catch((err) => {
+          res.status(400).json({ error: err });
+        });
+    } else {
+      commentsModel
+        .findOneAndUpdate(
+          { creatorID: req.token.id, _id: commentId, isDel: false },
+          { isDel: true },
+          {
+            new: true,
+          }
+        )
+        .then((result) => {
+          if (result) res.status(200).json(result);
+          else res.status(400).json({ message: "this post dont exist" });
+        })
+        .catch((err) => {
+          res.status(400).json({ error: err.message });
+        });
+    }
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+module.exports = {
+  createComment,
+  getPostComments,
+  updateComment,
+  deleteComment,
+};
