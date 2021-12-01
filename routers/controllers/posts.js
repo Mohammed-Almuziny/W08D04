@@ -42,41 +42,21 @@ const updatePost = async (req, res) => {
   try {
     const { postId, imgUrl, desc } = req.body;
 
-    const user = await rolesModel.findById(req.token.role);
-
-    if (user.role === "admin") {
-      postsModel
-        .findOneAndUpdate(
-          { _id: postId, isDel: false },
-          { imgUrl, desc },
-          {
-            new: true,
-          }
-        )
-        .then((result) => {
-          if (result) res.status(200).json(result);
-          else res.status(400).json({ message: "this post dont exist" });
-        })
-        .catch((err) => {
-          res.status(400).json({ error: err });
-        });
-    } else {
-      postsModel
-        .findOneAndUpdate(
-          { createrID: req.token.id, _id: postId },
-          { imgUrl, desc },
-          {
-            new: true,
-          }
-        )
-        .then((result) => {
-          if (result) res.status(200).json(result);
-          else res.status(400).json({ message: "this post dont exist" });
-        })
-        .catch((err) => {
-          res.status(400).json({ error: err });
-        });
-    }
+    postsModel
+      .findOneAndUpdate(
+        { createrID: req.token.id, _id: postId },
+        { imgUrl, desc },
+        {
+          new: true,
+        }
+      )
+      .then((result) => {
+        if (result) res.status(200).json(result);
+        else res.status(400).json({ message: "this post dont exist" });
+      })
+      .catch((err) => {
+        res.status(400).json({ error: err });
+      });
   } catch (err) {
     res.status(400).json({ error: err });
   }
