@@ -5,6 +5,7 @@ const {
   getUserPosts,
   updatePost,
   deletePost,
+  getAllPosts,
 } = require("./../controllers/posts");
 const authentication = require("./../middlewares/authentication");
 const authorization = require("./../middlewares/authorization");
@@ -15,5 +16,6 @@ postsRouter.post("/create", authentication, createPost);
 postsRouter.get("/userPosts/:createrID", authentication, getUserPosts);
 postsRouter.put("/update", authentication, updatePost);
 postsRouter.delete("/:postId", authentication, deletePost);
+postsRouter.get("/allPosts", authentication, getAllPosts);
 
 module.exports = postsRouter;

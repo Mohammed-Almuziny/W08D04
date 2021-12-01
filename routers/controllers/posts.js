@@ -65,7 +65,7 @@ const updatePost = async (req, res) => {
     } else {
       postsModel
         .findOneAndUpdate(
-          { createrID: req.token.id, _Id: postId },
+          { createrID: req.token.id, _id: postId },
           { imgUrl, desc },
           {
             new: true,
@@ -128,4 +128,25 @@ const deletePost = async (req, res) => {
   }
 };
 
-module.exports = { createPost, getUserPosts, updatePost, deletePost };
+const getAllPosts = (req, res) => {
+  try {
+    postsModel
+      .find({ isDel: false })
+      .then((result) => {
+        res.status(200).json(result);
+      })
+      .catch((err) => {
+        res.status(400).json(err);
+      });
+  } catch (err) {
+    res.status(400).json(err);
+  }
+};
+
+module.exports = {
+  createPost,
+  getUserPosts,
+  updatePost,
+  deletePost,
+  getAllPosts,
+};
