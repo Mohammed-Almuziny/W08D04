@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const posts = new mongoose.Schema({
+const comments = new mongoose.Schema({
   desc: { type: String, required: true },
   createrID: {
     type: mongoose.Schema.Types.ObjectId,
@@ -11,4 +11,4 @@ const posts = new mongoose.Schema({
   date: { type: Date, default: new Date() },
 });
 
-module.exports = mongoose.model("Posts", posts);
+module.exports = mongoose.model("Comments", comments);
