@@ -9,12 +9,13 @@ const SECRET = process.env.SECRETKEY;
 
 const register = async (req, res) => {
   try {
-    const { email, password, role } = req.body;
+    const { name, email, password, role } = req.body;
 
     const savedEmail = email.toLowerCase();
     const savedPassword = await bcrypt.hash(password, SALT);
 
     const newUser = new usersModel({
+      name,
       email: savedEmail,
       password: savedPassword,
       role,
