@@ -85,7 +85,7 @@ const logIn = (req, res) => {
 
 const getAllUsers = (req, res) => {
   try {
-    usersModel.find().then((result) => {
+    usersModel.find({ isDel: false }).then((result) => {
       res.status(200).json(result);
     });
   } catch (err) {
@@ -96,9 +96,9 @@ const getAllUsers = (req, res) => {
 const deleteUser = (req, res) => {
   try {
     usersModel
-      .findByIdAndDelete(req.params.id)
+      .findByIdAndUpdate(req.params.id, { isDel: true })
       .then((result) => {
-        if (result) res.status(200).json(result);
+        if (!result.isDel) res.status(200).json(result);
         else res.status(404).json("user dose not exist");
       })
       .catch((err) => {
