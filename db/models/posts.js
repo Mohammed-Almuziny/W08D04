@@ -8,7 +8,7 @@ const posts = new mongoose.Schema({
     required: true,
     ref: "Users",
   },
-  timeStamp: { type: Date, default: new Date() },
+  date: { type: Date, default: new Date() },
 });
 
 module.exports = mongoose.model("Posts", posts);
