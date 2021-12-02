@@ -129,7 +129,7 @@ const handleLike = (req, res) => {
       likesModel
         .findOneAndDelete({ user: req.token.id, post: postId })
         .then((result) => {
-          res.status(201).json(result);
+          res.status(201).json({ unlike: result });
         })
         .catch((err) => {
           res.status(400).json({ error: err.message });
@@ -143,7 +143,7 @@ const handleLike = (req, res) => {
       newLike
         .save()
         .then((result) => {
-          res.status(201).json(result);
+          res.status(201).json({ like: result });
         })
         .catch((err) => {
           res.status(400).json({ error: err.message });
