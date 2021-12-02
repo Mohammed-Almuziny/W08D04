@@ -27,10 +27,16 @@ const getUserPosts = (req, res) => {
   try {
     postsModel
       .find({ createrID: req.token.id, isDel: false })
+      .populate({
+        path: "comments",
+        select: "desc creatorId",
+        match: { isDel: false },
+        populate: { path: "creatorId", select: "name" },
+      })
       .then((result) => {
         res.status(200).json(result);
       })
-      .catch((error) => {
+      .catch((err) => {
         res.status(400).json({ error: err.message });
       });
   } catch (err) {
@@ -110,6 +116,12 @@ const getAllPosts = (req, res) => {
   try {
     postsModel
       .find({ isDel: false })
+      .populate({
+        path: "comments",
+        select: "desc creatorId",
+        match: { isDel: false },
+        populate: { path: "creatorId", select: "name" },
+      })
       .then((result) => {
         res.status(200).json(result);
       })
