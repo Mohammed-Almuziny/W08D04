@@ -1,4 +1,5 @@
 const commentsModel = require("./../../db/models/comments");
+const postsModel = require("./../../db/models/posts");
 const rolesModel = require("./../../db/models/roles");
 
 const createComment = (req, res) => {
@@ -14,6 +15,15 @@ const createComment = (req, res) => {
     newComment
       .save()
       .then((result) => {
+
+        postsModel
+          .findByIdAndUpdate(ref, { $push: { comments: result._id } })
+          .then((result) => {
+            console.log(result);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
         res.status(201).json(result);
       })
       .catch((err) => {
