@@ -43,7 +43,10 @@ const logIn = (req, res) => {
     console.log(nameOrEmail);
 
     usersModel
-      .findOne({ $or: [{ name: nameOrEmail }, { email: savedEmail }] })
+      .findOne({
+        $or: [{ name: nameOrEmail }, { email: savedEmail }],
+        // isDel: false,
+      })
       .then(async (result) => {
         if (result) {
           if (result.email === savedEmail || result.name === nameOrEmail) {
