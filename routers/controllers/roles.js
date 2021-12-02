@@ -15,10 +15,10 @@ const createRole = (req, res) => {
         res.status(201).json(result);
       })
       .catch((err) => {
-        res.status(400).json(err);
+        res.status(400).json({ error: err.message });
       });
   } catch (err) {
-    res.status(400).json(err);
+    res.status(400).json({ error: err.message });
   }
 };
 
@@ -30,10 +30,10 @@ const getRole = (req, res) => {
         res.status(200).json(result);
       })
       .catch((err) => {
-        res.status(400).json(err);
+        res.status(400).json({ error: err.message });
       });
   } catch (err) {
-    res.status(400).json(err);
+    res.status(400).json({ error: err.message });
   }
 };
 

@@ -27,10 +27,10 @@ const register = async (req, res) => {
         res.status(201).json(result);
       })
       .catch((err) => {
-        res.status(400).json(err);
+        res.status(400).json({ error: err.message });
       });
   } catch (err) {
-    res.status(400).json(err);
+    res.status(400).json({ error: err.message });
   }
 };
 
@@ -66,20 +66,20 @@ const logIn = (req, res) => {
 
               res.status(200).json({ result, token });
             } else {
-              res.status(400).json("invalid email or password");
+              res.status(400).json({ message: "invalid email or password" });
             }
           } else {
-            res.status(400).json("invalid email or password");
+            res.status(400).json({ message: "invalid email or password" });
           }
         } else {
-          res.status(404).json("email dose not exist");
+          res.status(404).json({ message: "email dose not exist" });
         }
       })
       .catch((err) => {
         res.status(400).json(err);
       });
   } catch (err) {
-    res.status(400).json(err);
+    res.status(400).json({ error: err.message });
   }
 };
 
@@ -89,7 +89,7 @@ const getAllUsers = (req, res) => {
       res.status(200).json(result);
     });
   } catch (err) {
-    res.status(400).json(err);
+    res.status(400).json({ error: err.message });
   }
 };
 
@@ -99,13 +99,13 @@ const deleteUser = (req, res) => {
       .findByIdAndUpdate(req.params.id, { isDel: true })
       .then((result) => {
         if (!result.isDel) res.status(200).json(result);
-        else res.status(404).json("user dose not exist");
+        else res.status(404).json({ message: "user dose not exist" });
       })
       .catch((err) => {
         res.status(400).json(err);
       });
   } catch (err) {
-    res.status(400).json(err);
+    res.status(400).json({ error: err.message });
   }
 };
 

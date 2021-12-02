@@ -17,10 +17,10 @@ const createComment = (req, res) => {
         res.status(201).json(result);
       })
       .catch((err) => {
-        res.status(400).json({ error: err });
+        res.status(400).json({ error: err.message });
       });
   } catch (err) {
-    res.status(400).json({ error: err });
+    res.status(400).json({ error: err.message });
   }
 };
 
@@ -34,10 +34,10 @@ const getPostComments = (req, res) => {
         res.status(200).json(result);
       })
       .catch((err) => {
-        res.status(400).json({ error: err });
+        res.status(400).json({ error: err.message });
       });
   } catch (err) {
-    res.status(400).json({ error: err });
+    res.status(400).json({ error: err.message });
   }
 };
 
@@ -60,10 +60,10 @@ const updateComment = (req, res) => {
         else res.status(404).json({ message: "this comment dose not exist" });
       })
       .catch((err) => {
-        res.status(400).json({ error: err });
+        res.status(400).json({ error: err.message });
       });
   } catch (err) {
-    res.status(400).json({ error: err });
+    res.status(400).json({ error: err.message });
   }
 };
 
@@ -87,7 +87,7 @@ const deleteComment = async (req, res) => {
           else res.status(400).json({ message: "this comment dont exist" });
         })
         .catch((err) => {
-          res.status(400).json({ error: err });
+          res.status(400).json({ error: err.message });
         });
     } else {
       commentsModel

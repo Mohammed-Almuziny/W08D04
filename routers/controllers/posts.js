@@ -16,10 +16,10 @@ const createPost = (req, res) => {
         res.status(201).json(result);
       })
       .catch((err) => {
-        res.status(400).json({ error: err });
+        res.status(400).json({ error: err.message });
       });
   } catch (err) {
-    res.status(400).json({ error: err });
+    res.status(400).json({ error: err.message });
   }
 };
 
@@ -31,10 +31,10 @@ const getUserPosts = (req, res) => {
         res.status(200).json(result);
       })
       .catch((error) => {
-        res.status(400).json({ error: err });
+        res.status(400).json({ error: err.message });
       });
   } catch (err) {
-    res.status(400).json({ error: err });
+    res.status(400).json({ error: err.message });
   }
 };
 
@@ -55,10 +55,10 @@ const updatePost = async (req, res) => {
         else res.status(400).json({ message: "this post dont exist" });
       })
       .catch((err) => {
-        res.status(400).json({ error: err });
+        res.status(400).json({ error: err.message });
       });
   } catch (err) {
-    res.status(400).json({ error: err });
+    res.status(400).json({ error: err.message });
   }
 };
 
@@ -82,7 +82,7 @@ const deletePost = async (req, res) => {
           else res.status(400).json({ message: "this post dont exist" });
         })
         .catch((err) => {
-          res.status(400).json({ error: err });
+          res.status(400).json({ error: err.message });
         });
     } else {
       postsModel
@@ -98,11 +98,11 @@ const deletePost = async (req, res) => {
           else res.status(400).json({ message: "this post dont exist" });
         })
         .catch((err) => {
-          res.status(400).json({ error: err });
+          res.status(400).json({ error: err.message });
         });
     }
   } catch (err) {
-    res.status(400).json({ error: err });
+    res.status(400).json({ error: err.message });
   }
 };
 
@@ -114,10 +114,10 @@ const getAllPosts = (req, res) => {
         res.status(200).json(result);
       })
       .catch((err) => {
-        res.status(400).json(err);
+        res.status(400).json({ error: err.message });
       });
   } catch (err) {
-    res.status(400).json(err);
+    res.status(400).json({ error: err.message });
   }
 };
 
@@ -132,7 +132,7 @@ const handleLike = (req, res) => {
           res.status(201).json(result);
         })
         .catch((err) => {
-          res.status(400).json({ error: err });
+          res.status(400).json({ error: err.message });
         });
     } else {
       const newLike = new likesModel({
@@ -146,7 +146,7 @@ const handleLike = (req, res) => {
           res.status(201).json(result);
         })
         .catch((err) => {
-          res.status(400).json({ error: err });
+          res.status(400).json({ error: err.message });
         });
     }
   } catch (err) {
