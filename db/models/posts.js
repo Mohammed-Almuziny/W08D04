@@ -14,6 +14,12 @@ const posts = new mongoose.Schema({
       ref: "Comments",
     },
   ],
+  likes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Likes",
+    },
+  ],
   isDel: { type: Boolean, default: false },
   date: { type: Date, default: new Date() },
 });
