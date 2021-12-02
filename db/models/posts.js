@@ -8,6 +8,12 @@ const posts = new mongoose.Schema({
     required: true,
     ref: "Users",
   },
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Comments",
+    },
+  ],
   isDel: { type: Boolean, default: false },
   date: { type: Date, default: new Date() },
 });
