@@ -45,7 +45,7 @@ const logIn = (req, res) => {
     usersModel
       .findOne({
         $or: [{ name: nameOrEmail }, { email: savedEmail }],
-        // isDel: false,
+        isDel: false,
       })
       .then(async (result) => {
         if (result) {
