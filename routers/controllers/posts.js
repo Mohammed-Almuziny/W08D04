@@ -33,6 +33,11 @@ const getUserPosts = (req, res) => {
         match: { isDel: false },
         populate: { path: "creatorId", select: "name" },
       })
+      .populate({
+        path: "likes",
+        select: "user",
+        populate: { path: "user", select: "name" },
+      })
       .then((result) => {
         res.status(200).json(result);
       })
@@ -122,6 +127,11 @@ const getAllPosts = (req, res) => {
         match: { isDel: false },
         populate: { path: "creatorId", select: "name" },
       })
+      .populate({
+        path: "likes",
+        select: "user",
+        populate: { path: "user", select: "name" },
+      })
       .then((result) => {
         res.status(200).json(result);
       })
@@ -136,6 +146,8 @@ const getAllPosts = (req, res) => {
 const handleLike = (req, res) => {
   try {
     const { postId } = req.body;
+
+    console.log(req.isLiked);
 
     if (req.isLiked) {
       likesModel
@@ -155,6 +167,15 @@ const handleLike = (req, res) => {
       newLike
         .save()
         .then((result) => {
+          postsModel
+            .findByIdAndUpdate(postId, { $push: { likes: result._id } })
+            .then((result) => {
+              console.log(result);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+
           res.status(201).json({ like: result });
         })
         .catch((err) => {
