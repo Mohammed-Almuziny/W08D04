@@ -147,6 +147,10 @@ const likes = new mongoose.Schema({
 
 ## Diagrams
 
+### UML Diagrams
+
+ <img src="./UML.png" alt="UML Diagram" style="zoom:75%;" />
+
 ### ER Diagrams
 
  <img src="./ERDiagram.png" alt="ER Diagram" style="zoom:75%;" />
