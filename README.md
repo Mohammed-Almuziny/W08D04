@@ -144,3 +144,9 @@ const likes = new mongoose.Schema({
   post: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "Posts" },
 });
 ```
+
+## Diagrams
+
+### ER Diagrams
+
+ <img src="./ERDiagram.png" alt="ER Diagram" style="zoom:75%;" />
