@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const usersModel = require("./../../db/models/users");
+const sendEmail = require("./../../utils/email");
 
 const SALT = Number(process.env.SALT);
 const SECRET = process.env.SECRETKEY;
@@ -23,7 +24,10 @@ const register = async (req, res) => {
 
     newUser
       .save()
-      .then((result) => {
+      .then(async (result) => {
+        const message = `${process.env.BASE_URL}/user/verify/${newUser._id}`;
+        await sendEmail(newUser.email, "Verify Email", message);
+
         res.status(201).json(result);
       })
       .catch((err) => {
@@ -31,6 +35,21 @@ const register = async (req, res) => {
       });
   } catch (err) {
     res.status(400).json({ error: err.message });
+  }
+};
+
+const verifyUser = (req, res) => {
+  try {
+    usersModel
+      .findByIdAndUpdate(req.params.id, { verified: true }, { new: true })
+      .then((result) => {
+        res.status(200).json(result);
+      })
+      .catch((err) => {
+        res.status(400).json(err);
+      });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
 };
 
@@ -46,6 +65,7 @@ const logIn = (req, res) => {
       .findOne({
         $or: [{ name: nameOrEmail }, { email: savedEmail }],
         isDel: false,
+        verified: true,
       })
       .then(async (result) => {
         if (result) {
@@ -112,4 +132,4 @@ const deleteUser = (req, res) => {
   }
 };
 
-module.exports = { register, logIn, getAllUsers, deleteUser };
+module.exports = { register, verifyUser, logIn, getAllUsers, deleteUser };

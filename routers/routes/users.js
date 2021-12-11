@@ -2,6 +2,7 @@ const express = require("express");
 
 const {
   register,
+  verifyUser,
   logIn,
   getAllUsers,
   deleteUser,
@@ -12,6 +13,7 @@ const authorization = require("./../middlewares/authorization");
 const usersRouter = express.Router();
 
 usersRouter.post("/register", register); // create new user.
+usersRouter.get("/user/verify/:id", verifyUser);
 usersRouter.post("/logIn", logIn); // log in by eamil and password.
 
 // require admin account.
