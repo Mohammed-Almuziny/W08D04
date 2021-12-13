@@ -67,6 +67,7 @@ const logIn = (req, res) => {
         isDel: false,
         verified: true,
       })
+      .populate("role")
       .then(async (result) => {
         if (result) {
           if (result.email === savedEmail || result.name === nameOrEmail) {
@@ -102,6 +103,7 @@ const logIn = (req, res) => {
         res.status(400).json(err);
       });
   } catch (err) {
+    console.log(err);
     res.status(400).json({ error: err.message });
   }
 };

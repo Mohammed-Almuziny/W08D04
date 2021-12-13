@@ -27,6 +27,7 @@ const getUserPosts = (req, res) => {
   try {
     postsModel
       .find({ createrID: req.token.id, isDel: false })
+      .populate({ path: "createrID", select: "name", match: { isDel: false } })
       .populate({
         path: "comments",
         select: "desc creatorId",
@@ -121,6 +122,7 @@ const getAllPosts = (req, res) => {
   try {
     postsModel
       .find({ isDel: false })
+      .populate({ path: "createrID", select: "name", match: { isDel: false } })
       .populate({
         path: "comments",
         select: "desc creatorId",
