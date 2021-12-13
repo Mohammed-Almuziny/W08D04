@@ -53,6 +53,46 @@ const verifyUser = (req, res) => {
   }
 };
 
+const forgetPassword = (req, res) => {
+  try {
+    const { email } = req.body;
+
+    usersModel
+      .findOne({ email: email, isDel: false, verified: true })
+      .then(async (result) => {
+        if (result) {
+          const payload = {
+            role: result.role,
+            id: result._id,
+          };
+
+          const options = {
+            expiresIn: "30m",
+          };
+
+          const token = await jwt.sign(payload, SECRET, options);
+
+          const message = `http://localhost:3000/Resetpass/${token}`;
+          await sendEmail(email, "Reset password", message);
+        }
+        res.status(200).json(result);
+      })
+      .catch((err) => {
+        res.status(400).json({ error: err.message });
+      });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+const setPass = (req, res) => {
+  try {
+    res.status(200).json(true);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
 const logIn = (req, res) => {
   try {
     const { nameOrEmail, password } = req.body;
@@ -134,4 +174,12 @@ const deleteUser = (req, res) => {
   }
 };
 
-module.exports = { register, verifyUser, logIn, getAllUsers, deleteUser };
+module.exports = {
+  register,
+  verifyUser,
+  forgetPassword,
+  setPass,
+  logIn,
+  getAllUsers,
+  deleteUser,
+};
