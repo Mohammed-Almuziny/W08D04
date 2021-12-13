@@ -189,6 +189,14 @@ const handleLike = (req, res) => {
   }
 };
 
+const checkLike = (req, res) => {
+  try {
+    res.status(200).json(req.isLiked);
+  } catch (error) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
 module.exports = {
   createPost,
   getUserPosts,
@@ -196,4 +204,5 @@ module.exports = {
   deletePost,
   getAllPosts,
   handleLike,
+  checkLike,
 };
