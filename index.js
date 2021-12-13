@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 const passport = require("passport");
+const session = require("express-session");
 require("dotenv").config();
 
 require("./db");
@@ -17,23 +18,19 @@ app.use(express.json());
 app.use(cors());
 app.use(morgan("dev"));
 
+app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
+app.use(passport.session());
 
-
-app.get('/', (req, res) => {
+app.get("/", (req, res) => {
   res.send('<a href="/auth/google">Authenticate with Google</a>');
 });
 
-app.get('/auth/google',
-  passport.authenticate('google', { scope: [ 'email', 'profile' ] }
-));
-
-app.get( '/auth/google/callback',
-  passport.authenticate( 'google', {
-    successRedirect: '/protected',
-    failureRedirect: '/auth/google/failure'
-  })
-);
+app.get("/logout", (req, res) => {
+  req.logout();
+  req.session.destroy();
+  res.send("Goodbye!");
+});
 
 app.use(rolesRouter);
 app.use(usersRouter);
