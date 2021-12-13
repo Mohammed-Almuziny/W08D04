@@ -1,5 +1,6 @@
 const express = require("express");
 const passport = require("passport");
+const popupTools = require("popup-tools");
 
 const {
   register,
@@ -24,9 +25,14 @@ usersRouter.get(
   "/auth/google/callback",
   passport.authenticate("google"),
   (req, res) => {
-    res.json(req.user);
+    res.end(popupTools.popupResponse(req.user));
   }
 );
+usersRouter.get("/logout", (req, res) => {
+  req.logout();
+  req.session.destroy();
+  res.status(200).json("log out");
+});
 
 // require admin account.
 usersRouter.get("/allUsers", authentication, authorization, getAllUsers); // get all users in databas

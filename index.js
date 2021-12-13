@@ -26,12 +26,6 @@ app.get("/", (req, res) => {
   res.send('<a href="/auth/google">Authenticate with Google</a>');
 });
 
-app.get("/logout", (req, res) => {
-  req.logout();
-  req.session.destroy();
-  res.send("Goodbye!");
-});
-
 app.use(rolesRouter);
 app.use(usersRouter);
 app.use("/posts", postsRouter);
