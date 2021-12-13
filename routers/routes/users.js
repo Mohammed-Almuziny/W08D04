@@ -22,10 +22,10 @@ usersRouter.get(
 );
 usersRouter.get(
   "/auth/google/callback",
-  passport.authenticate("google", {
-    successRedirect: "http://localhost:3000/",
-    failureRedirect: "/auth/google/failure",
-  })
+  passport.authenticate("google"),
+  (req, res) => {
+    res.json(req.user);
+  }
 );
 
 // require admin account.
