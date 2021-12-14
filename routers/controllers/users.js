@@ -85,9 +85,21 @@ const forgetPassword = (req, res) => {
   }
 };
 
-const setPass = (req, res) => {
+const setPass = async (req, res) => {
   try {
-    res.status(200).json(true);
+    const { newPassword } = req.body;
+    console.log(newPassword);
+
+    const savedPassword = await bcrypt.hash(newPassword, SALT);
+
+    usersModel
+      .findByIdAndUpdate(req.token, { password: savedPassword })
+      .then((result) => {
+        res.status(200).json(result);
+      })
+      .catch((err) => {
+        res.status(400).json(err);
+      });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }

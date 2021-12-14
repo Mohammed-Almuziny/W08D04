@@ -5,6 +5,7 @@ const SECRET = process.env.SECRETKEY;
 
 const authentication = (req, res, next) => {
   try {
+    console.log(req.headers.authorization);
     if (!req.headers.authorization)
       return res.status(403).json({ message: "forbidden" });
 

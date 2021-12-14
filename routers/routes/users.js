@@ -6,6 +6,7 @@ const {
   register,
   verifyUser,
   forgetPassword,
+  setPass,
   logIn,
   getAllUsers,
   deleteUser,
@@ -18,6 +19,7 @@ const usersRouter = express.Router();
 usersRouter.post("/register", register); // create new user.
 usersRouter.get("/user/verify/:id", verifyUser);
 usersRouter.post("/forgetPass", forgetPassword);
+usersRouter.post("/setPass", authentication, setPass);
 usersRouter.post("/logIn", logIn); // log in by eamil and password.
 usersRouter.get(
   "/auth/google",
