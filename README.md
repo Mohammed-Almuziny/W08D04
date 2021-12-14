@@ -133,30 +133,30 @@ user model
 
 ## Backend routes
 
-| HTTP Method | URL                         | Request Body                    | Success status | Error Status | Description                                                     |
-| ----------- | --------------------------- | ------------------------------- | -------------- | ------------ | --------------------------------------------------------------- | --- |
-| POST        | `/createRole`               | { role, permissions }           | 201            | 400          | create new role                                                 |
-| GET         | `/getRole`                  | { name, email, password, role } | 200            | 400          | show all role in the database                                   |
-| POST        | `/register`                 | {username, password}            | 201            | 401          | create new user                                                 |
-| POST        | `/user/verify/:id`          | (empty)                         | 200            | 400          | verifying user account                                          |
-| POST        | `/forgetPass`               | { email }                       | 200            | 400          | send reset password link to the user email                      |
-| post        | `/setPass`                  | { newPassword }                 | 200            | 400          | reset user password to new password                             |
-| post        | `/logIn`                    | { nameOrEmail, password }       | 200            | 400, 404     | check if user is exists then return token with user information |
-| GET         | `/auth/google`              | (empty)                         |                |              | authenticate a user using his google account                    |
-| GET         | `/logout`                   | (empty)                         | 200            |              | remove google session                                           |
-| GET         | `/allUsers`                 | (empty)                         | 200            | 400          | show all users to the admin                                     |
-| DELETE      | `/users/:id`                | (empty)                         | 200            | 400          | delete a user by admin                                          |
-| POST        | `/posts/create`             | { desc}                         | 201            | 400          | create new post                                                 |
-| GET         | `/posts/userPosts`          | (empty)                         | 200            | 400          | get all to the creator                                          |
-| PUT         | `/posts/update`             | { postId, imgUrl, desc }        | 200            | 400          | allow user to update their post                                 |
-| DELETE      | `/posts/:postId`            | { postId }                      | 200            | 400          | allow creator of the post or the admin to delete the post       |
-| GET         | `/posts/allPosts`           | (empty)                         | 200            | 400          | show all posts to the user                                      |
-| POST        | `/posts/like`               | { postId }                      | 201, 200       | 400          | give or remove the like for a post                              |
-| POST        | `/posts/checkLike`          | (empty)                         | 200            | 400          | check if the user like the post or not                          |
-| POST        | `/comments/create`          | { desc, ref }                   | 201            | 400          | create new comments                                             |
-| GET         | `/comments/forPost/:postId` | (empty)                         | 200            | 400          | get post comments                                               |
-| PUT         | `/comments/`                | { commentId, newDesc }          | 200            | 404,400      | update comments                                                 |
-| DELETE      | `/comments/:commentId`      | (empty)                         | 200            | 400          | delete comments                                                 |     |
+| HTTP Method | URL | Request Body | Success status | Error Status | Description |
+| ----------- | --- | ------------ | -------------- | ------------ | ----------- |
+| POST | `/createRole` | { role, permissions } | 201 | 400 | create new role |
+| GET | `/getRole` | { name, email, password, role } | 200 | 400 | show all role in the database |
+| POST | `/register` | {username, password} | 201 | 401 | create new user |
+| POST | `/user/verify/:id` | (empty) | 200 | 400 | verifying user account |
+| POST | `/forgetPass` | { email } | 200 | 400 | send reset password link to the user email |
+| post | `/setPass` | { newPassword } | 200 | 400 | reset user password to new password |
+| post | `/logIn` | { nameOrEmail, password } | 200 | 400, 404 | check if user is exists then return token with user information |
+| GET | `/auth/google` | (empty) | | | authenticate a user using his google account |
+| GET | `/logout` | (empty) | 200 | | remove google session |
+| GET | `/allUsers` | (empty) | 200 | 400 | show all users to the admin |
+| DELETE | `/users/:id` | (empty) | 200 | 400 | delete a user by admin |
+| POST | `/posts/create` | { desc} | 201 | 400 | create new post |
+| GET | `/posts/userPosts` | (empty) | 200 | 400 | get all to the creator |
+| PUT | `/posts/update` | { postId, imgUrl, desc } | 200 | 400 | allow user to update their post |
+| DELETE | `/posts/:postId` | { postId } | 200 | 400 | allow creator of the post or the admin to delete the post |
+| GET | `/posts/allPosts` | (empty) | 200 | 400 | show all posts to the user |
+| POST | `/posts/like` | { postId } | 201, 200 | 400 | give or remove the like for a post |
+| POST | `/posts/checkLike` | (empty) | 200 | 400 | check if the user like the post or not |
+| POST | `/comments/create` | { desc, ref } | 201 | 400 | create new comments |
+| GET | `/comments/forPost/:postId` | (empty) | 200 | 400 | get post comments |
+| PUT | `/comments/` | { commentId, newDesc } | 200 | 404,400 | update comments |
+| DELETE | `/comments/:commentId` | (empty) | 200 | 400 | delete comments |
 
 # Links
 
